@@ -1,0 +1,214 @@
+zabbix_export:
+  version: '5.2'
+  date: '2021-03-24T10:30:11Z'
+  groups:
+    -
+      name: 'Templates/Network devices'
+  templates:
+    -
+      template: 'Juniper BGP'
+      name: 'Juniper BGP'
+      groups:
+        -
+          name: 'Templates/Network devices'
+      applications:
+        -
+          name: BGP
+      discovery_rules:
+        -
+          name: 'BGP peer discovery'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#BGPPEERINDEX},.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.14,{#BGPPEERREMOTEADDRESS},1.3.6.1.4.1.2636.5.1.1.2.1.1.1.11, {#BGPEERREMOTEAS},.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.13]'
+          key: net.bgp.peer.discovery
+          delay: 10m
+          item_prototypes:
+            -
+              name: 'Last received error ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.2.1.1.5.{#SNMPINDEX}'
+              key: 'net.bgp.peer.error.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 5m
+              trends: '0'
+              value_type: TEXT
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'Last sent error ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.2.1.1.6.{#SNMPINDEX}'
+              key: 'net.bgp.peer.error.sent[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 5m
+              trends: '0'
+              value_type: TEXT
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv4 prefixes accepted ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.8.{#BGPPEERINDEX}.1.1'
+              key: 'net.bgp.peer.prefixes.ipv4.accepted[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv4 prefixes advertised ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.6.2.1.10.{#BGPPEERINDEX}.1.1'
+              key: 'net.bgp.peer.prefixes.ipv4.advertised[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv4 prefixes received ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.7.{#BGPPEERINDEX}.1.1'
+              key: 'net.bgp.peer.prefixes.ipv4.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv4 prefixes rejected ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.9.{#BGPPEERINDEX}.1.1'
+              key: 'net.bgp.peer.prefixes.ipv4.rejected[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv6 prefixes accepted ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.8.{#BGPPEERINDEX}.2.1'
+              key: 'net.bgp.peer.prefixes.ipv6.accepted[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv6 prefixes advertised ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.6.2.1.10.{#BGPPEERINDEX}.2.1'
+              key: 'net.bgp.peer.prefixes.ipv6.advertised[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv6 prefixes received ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.7.{#BGPPEERINDEX}.2.1'
+              key: 'net.bgp.peer.prefixes.ipv6.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'IPv6 prefixes rejected ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.9.{#BGPPEERINDEX}.2.1'
+              key: 'net.bgp.peer.prefixes.ipv6.rejected[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 2m
+              applications:
+                -
+                  name: BGP
+            -
+              name: 'Peer state ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.2.{#SNMPINDEX}'
+              key: 'net.bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              applications:
+                -
+                  name: BGP
+              valuemap:
+                name: BgpPeerState
+            -
+              name: 'Administrative status ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.3.{#SNMPINDEX}'
+              key: 'net.bgp.peer.status[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 5m
+              applications:
+                -
+                  name: BGP
+              valuemap:
+                name: BgpPeerAdminStatus
+            -
+              name: 'Established time ({#BGPPEERREMOTEADDRESS})'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.4.1.1.1.{#SNMPINDEX}'
+              key: 'net.bgp.peer.uptime[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
+              delay: 5m
+              units: seconds
+              applications:
+                -
+                  name: BGP
+          preprocessing:
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  json = JSON.parse(value);
+                  
+                  json.forEach(function (item, index, array) {
+                      var ip = item["{#BGPPEERREMOTEADDRESS}"];
+                  
+                      parts = ip.trim().split(' ');
+                  
+                      if (parts.length === 4) {
+                          for (var i = 0; i < parts.length; ++i) {
+                              parts[i] = parseInt(parts[i], 16);
+                          }
+                  
+                          ip = parts.join('.');
+                      } else {
+                          var str = parts.join('');
+                          var parts = str.match(/.{1,4}/g);
+                          ip = parts.join(":");
+                          ip = ip.replace(/\b(?:0+:){2,}/, ':')
+                                 .split(':')
+                  	       .map(function(octet) {
+                                     return  octet.replace(/\b0+/g, '');
+                                 })
+                                 .join(':');
+                      }
+                  
+                      array[index]["{#BGPPEERREMOTEADDRESS}"] = ip;
+                  });
+                  
+                  return JSON.stringify(json);
+  value_maps:
+    -
+      name: BgpPeerAdminStatus
+      mappings:
+        -
+          value: '1'
+          newvalue: stop
+        -
+          value: '2'
+          newvalue: start
+    -
+      name: BgpPeerState
+      mappings:
+        -
+          value: '1'
+          newvalue: idle
+        -
+          value: '2'
+          newvalue: connect
+        -
+          value: '3'
+          newvalue: active
+        -
+          value: '4'
+          newvalue: opensent
+        -
+          value: '5'
+          newvalue: openconfirm
+        -
+          value: '6'
+          newvalue: established
