@@ -7,12 +7,12 @@ Import the .yaml file under Configuration > Templates > Import.
 ## Item prototypes (per peer)
 - Administrative status
 - Established time
-- IPv4 prefixes acepted
-- IPv4 prefixes advertisd
+- IPv4 prefixes accepted
+- IPv4 prefixes advertised
 - IPv4 prefixes received
 - IPv4 prefixes rejected
 - IPv6 prefixes accepted
-- IPv6 prefixes advertisd
+- IPv6 prefixes advertised
 - IPv6 prefixes received
 - IPv6 prefixes rejected
 - Last received error
