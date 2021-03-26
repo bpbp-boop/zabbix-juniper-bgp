@@ -19,6 +19,14 @@ Import the .yaml file under Configuration > Templates > Import.
 - Last sent error
 - Peer state
 
+## Trigger prototypes (per peer)
+- Peer down
+- Peer losing more than 20% of received prefixes
+
+## Value maps
+- BGP peer administrative status
+- BGP peer state
+
 ## About
 I wanted to monitor BGP peers using Zabbix without using any external scripts
 
