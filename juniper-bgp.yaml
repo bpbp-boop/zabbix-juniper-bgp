@@ -1,6 +1,6 @@
 zabbix_export:
   version: '5.2'
-  date: '2021-03-24T10:30:11Z'
+  date: '2021-04-28T00:42:50Z'
   groups:
     -
       name: 'Templates/Network devices'
@@ -147,6 +147,19 @@ zabbix_export:
               applications:
                 -
                   name: BGP
+          trigger_prototypes:
+            -
+              expression: '{Juniper BGP:net.bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last()}=6 and {Juniper BGP:net.bgp.peer.prefixes.ipv4.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last()}<0.8*{Juniper BGP:net.bgp.peer.prefixes.ipv4.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].avg(1d)}'
+              name: '{HOST.HOST} BGP peer {#BGPPEERREMOTEADDRESS} (AS{#BGPEERREMOTEAS}) has lost more than 20% of received prefixes'
+              priority: WARNING
+              dependencies:
+                -
+                  name: '{HOST.HOST} BGP peer {#BGPPEERREMOTEADDRESS} (AS{#BGPEERREMOTEAS}) is DOWN'
+                  expression: '{Juniper BGP:net.bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last(#3)}<>6 and {Juniper BGP:net.bgp.peer.status[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last()}=2'
+            -
+              expression: '{Juniper BGP:net.bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last(#3)}<>6 and {Juniper BGP:net.bgp.peer.status[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}].last()}=2'
+              name: '{HOST.HOST} BGP peer {#BGPPEERREMOTEADDRESS} (AS{#BGPEERREMOTEAS}) is DOWN'
+              priority: HIGH
           preprocessing:
             -
               type: JAVASCRIPT
@@ -174,7 +187,8 @@ zabbix_export:
                   	       .map(function(octet) {
                                      return  octet.replace(/\b0+/g, '');
                                  })
-                                 .join(':');
+                                 .join(':')
+                                 .toLowerCase();
                       }
                   
                       array[index]["{#BGPPEERREMOTEADDRESS}"] = ip;
