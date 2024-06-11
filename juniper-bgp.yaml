@@ -189,9 +189,9 @@ zabbix_export:
                                 // RFC 5952: 4.1. Leading zeros MUST be suppressed. A single 16-bit 0000 field MUST be represented as 0.
                                 word = word.replace(/^0+/, '');
                                 if (word.length === 0) {
-                                  word = "0"
+                                  word = "0";
                                 }
-                                return word
+                                return word;
                               })
                               .join(':')
                               // RFC 5952: 4.3. The characters "a", "b", "c", "d", "e", and "f" in an IPv6 address MUST be represented in lowercase.
