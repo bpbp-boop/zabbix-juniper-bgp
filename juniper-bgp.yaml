@@ -195,25 +195,25 @@ zabbix_export:
                               })
                               .join(':')
                               // RFC 5952: 4.3. The characters "a", "b", "c", "d", "e", and "f" in an IPv6 address MUST be represented in lowercase.
-                              .toLowerCase()
+                              .toLowerCase();
                   
                           // add a temporary terminator to each end of the string to aid matching consecutive 16-bit 0 fields
-                          ip = '<' + ip + '>'
+                          ip = '<' + ip + '>';
                   
                           // RFC 5952:
                           //   4.2.1. The use of the symbol "::" MUST be used to its maximum capability.
                           //   4.2.2. The symbol "::" MUST NOT be used to shorten just one 16-bit 0 field.
                           //   4.2.3.  The longest, left-most run of consecutive 16-bit 0 fields MUST be shortened
                           for (i = 8; i > 1; i--) {
-                              r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}")
+                              r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
                               if (m = ip.match(r1)) {
-                                  ip = ip.replace(r1, '::')
-                                  break
+                                  ip = ip.replace(r1, '::');
+                                  break;
                               }
                           }
                   
                           // remove any remaining temporary terminators
-                          ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; })
+                          ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
                       }
                   
                       array[index]["{#BGPPEERREMOTEADDRESS}"] = ip;
