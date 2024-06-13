@@ -178,17 +178,42 @@ zabbix_export:
                           }
                   
                           ip = parts.join('.');
-                      } else {
-                          var str = parts.join('');
-                          var parts = str.match(/.{1,4}/g);
-                          ip = parts.join(":");
-                          ip = ip.replace(/\b(?:0+:){2,}/, ':')
-                                 .split(':')
-                  	       .map(function(octet) {
-                                     return  octet.replace(/\b0+/g, '');
-                                 })
-                                 .join(':')
-                                 .toLowerCase();
+                      } else if (parts.length == 16) {
+                          // IPv6
+                  
+                          // convert to colon-separated lower case 16-bit hexadecimal fields with leading zeroes stripped
+                          ip = parts
+                              .join('')
+                              .match(/.{1,4}/g)
+                              .map(function(word) {
+                                // RFC 5952: 4.1. Leading zeros MUST be suppressed. A single 16-bit 0000 field MUST be represented as 0.
+                                word = word.replace(/^0+/, '');
+                                if (word.length === 0) {
+                                  word = "0";
+                                }
+                                return word;
+                              })
+                              .join(':')
+                              // RFC 5952: 4.3. The characters "a", "b", "c", "d", "e", and "f" in an IPv6 address MUST be represented in lowercase.
+                              .toLowerCase();
+                  
+                          // add a temporary terminator to each end of the string to aid matching consecutive 16-bit 0 fields
+                          ip = '<' + ip + '>';
+                  
+                          // RFC 5952:
+                          //   4.2.1. The use of the symbol "::" MUST be used to its maximum capability.
+                          //   4.2.2. The symbol "::" MUST NOT be used to shorten just one 16-bit 0 field.
+                          //   4.2.3.  The longest, left-most run of consecutive 16-bit 0 fields MUST be shortened
+                          for (i = 8; i > 1; i--) {
+                              r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
+                              if (m = ip.match(r1)) {
+                                  ip = ip.replace(r1, '::');
+                                  break;
+                              }
+                          }
+                  
+                          // remove any remaining temporary terminators
+                          ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
                       }
                   
                       array[index]["{#BGPPEERREMOTEADDRESS}"] = ip;
