@@ -188,43 +188,18 @@ zabbix_export:
                   json.forEach(function (item, index, array) {
                       var ip = item["{#BGPPEERREMOTEADDRESS}"];
                   
-                      // Handle raw bytes returned as ASCII characters (like "ea+z" for 101.97.43.122)
-                      if (ip.match(/^[\x00-\xff]+$/) && ip.length <= 16 && !ip.match(/^\d+\.\d+\.\d+\.\d+$/)) {
-                          // Convert raw bytes to proper IP format
-                          var bytes = [];
-                          for (var i = 0; i < ip.length; i++) {
-                              bytes.push(ip.charCodeAt(i));
-                          }
-                          
-                          if (bytes.length === 4) {
-                              // IPv4
-                              ip = bytes.join('.');
-                          } else if (bytes.length === 16) {
-                              // IPv6
-                              var parts = [];
-                              for (var i = 0; i < 16; i += 2) {
-                                  var hex = ((bytes[i] << 8) + bytes[i + 1]).toString(16);
-                                  parts.push(hex);
-                              }
-                              ip = parts.join(':');
-                              
-                              // Apply IPv6 compression rules
-                              ip = '<' + ip + '>';
-                              for (var i = 8; i > 1; i--) {
-                                  var r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
-                                  var m = ip.match(r1);
-                                  if (m) {
-                                      ip = ip.replace(r1, '::');
-                                      break;
-                                  }
-                              }
-                              ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
-                          }
-                      } else {
-                          // Handle space-separated hex format (original logic)
+                      // First, check if it's already a proper IP address
+                      if (ip.match(/^\d+\.\d+\.\d+\.\d+$/) || ip.match(/^[0-9a-fA-F:]+$/)) {
+                          // Already properly formatted, skip processing
+                          return;
+                      }
+                  
+                      // Handle space-separated hex format (like "CB 17 ED 14")
+                      if (ip.indexOf(' ') !== -1) {
                           var parts = ip.trim().split(' ');
                   
                           if (parts.length === 4) {
+                              // IPv4 from space-separated hex
                               for (var i = 0; i < parts.length; ++i) {
                                   parts[i] = parseInt(parts[i], 16);
                               }
@@ -247,12 +222,46 @@ zabbix_export:
                               ip = '<' + ip + '>';
                               for (var i = 8; i > 1; i--) {
                                   var r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
-                                  if (m = ip.match(r1)) {
+                                  var m = ip.match(r1);
+                                  if (m) {
                                       ip = ip.replace(r1, '::');
                                       break;
                                   }
                               }
                               ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
+                          }
+                      } else {
+                          // Handle raw bytes without spaces (like "ea+z" for 101.97.43.122)
+                          if (ip.length <= 16 && ip.match(/^[\x00-\xff]+$/)) {
+                              var bytes = [];
+                              for (var i = 0; i < ip.length; i++) {
+                                  bytes.push(ip.charCodeAt(i));
+                              }
+                              
+                              if (bytes.length === 4) {
+                                  // IPv4 from raw bytes
+                                  ip = bytes.join('.');
+                              } else if (bytes.length === 16) {
+                                  // IPv6 from raw bytes
+                                  var parts = [];
+                                  for (var i = 0; i < 16; i += 2) {
+                                      var hex = ((bytes[i] << 8) + bytes[i + 1]).toString(16);
+                                      parts.push(hex);
+                                  }
+                                  ip = parts.join(':');
+                                  
+                                  // Apply IPv6 compression rules
+                                  ip = '<' + ip + '>';
+                                  for (var i = 8; i > 1; i--) {
+                                      var r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
+                                      var m = ip.match(r1);
+                                      if (m) {
+                                          ip = ip.replace(r1, '::');
+                                          break;
+                                      }
+                                  }
+                                  ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
+                              }
                           }
                       }
                   
