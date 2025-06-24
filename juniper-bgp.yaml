@@ -23,7 +23,7 @@ zabbix_export:
           delay: 10m
           item_prototypes:
             -
-              name: 'Last received error ({#BGPPEERREMOTEADDRESS})'
+              name: 'Last received error AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.2.1.1.5.{#SNMPINDEX}'
               key: 'net.bgp.peer.error.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -34,7 +34,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'Last sent error ({#BGPPEERREMOTEADDRESS})'
+              name: 'Last sent error AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.2.1.1.6.{#SNMPINDEX}'
               key: 'net.bgp.peer.error.sent[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -45,7 +45,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv4 prefixes accepted ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv4 prefixes accepted AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.8.{#BGPPEERINDEX}.1.1'
               key: 'net.bgp.peer.prefixes.ipv4.accepted[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -54,7 +54,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv4 prefixes advertised ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv4 prefixes advertised AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.6.2.1.10.{#BGPPEERINDEX}.1.1'
               key: 'net.bgp.peer.prefixes.ipv4.advertised[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -63,7 +63,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv4 prefixes received ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv4 prefixes received AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.7.{#BGPPEERINDEX}.1.1'
               key: 'net.bgp.peer.prefixes.ipv4.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -72,7 +72,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv4 prefixes rejected ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv4 prefixes rejected AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.9.{#BGPPEERINDEX}.1.1'
               key: 'net.bgp.peer.prefixes.ipv4.rejected[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -81,7 +81,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv6 prefixes accepted ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv6 prefixes accepted AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.8.{#BGPPEERINDEX}.2.1'
               key: 'net.bgp.peer.prefixes.ipv6.accepted[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -90,7 +90,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv6 prefixes advertised ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv6 prefixes advertised AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.6.2.1.10.{#BGPPEERINDEX}.2.1'
               key: 'net.bgp.peer.prefixes.ipv6.advertised[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -99,7 +99,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv6 prefixes received ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv6 prefixes received AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.7.{#BGPPEERINDEX}.2.1'
               key: 'net.bgp.peer.prefixes.ipv6.received[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -108,7 +108,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'IPv6 prefixes rejected ({#BGPPEERREMOTEADDRESS})'
+              name: 'IPv6 prefixes rejected AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '1.3.6.1.4.1.2636.5.1.1.2.6.2.1.9.{#BGPPEERINDEX}.2.1'
               key: 'net.bgp.peer.prefixes.ipv6.rejected[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -117,7 +117,7 @@ zabbix_export:
                 -
                   name: BGP
             -
-              name: 'Peer state ({#BGPPEERREMOTEADDRESS})'
+              name: 'Peer state AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.2.{#SNMPINDEX}'
               key: 'net.bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -127,7 +127,7 @@ zabbix_export:
               valuemap:
                 name: BgpPeerState
             -
-              name: 'Administrative status ({#BGPPEERREMOTEADDRESS})'
+              name: 'Administrative status AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.1.1.1.3.{#SNMPINDEX}'
               key: 'net.bgp.peer.status[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -138,7 +138,7 @@ zabbix_export:
               valuemap:
                 name: BgpPeerAdminStatus
             -
-              name: 'Established time ({#BGPPEERREMOTEADDRESS})'
+              name: 'Established time AS{#BGPEERREMOTEAS} ({#BGPPEERREMOTEADDRESS})'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.4.1.2636.5.1.1.2.4.1.1.1.{#SNMPINDEX}'
               key: 'net.bgp.peer.uptime[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}]'
@@ -170,50 +170,72 @@ zabbix_export:
                   json.forEach(function (item, index, array) {
                       var ip = item["{#BGPPEERREMOTEADDRESS}"];
                   
-                      parts = ip.trim().split(' ');
-                  
-                      if (parts.length === 4) {
-                          for (var i = 0; i < parts.length; ++i) {
-                              parts[i] = parseInt(parts[i], 16);
+                      // Handle raw bytes returned as ASCII characters (like "ea+z" for 101.97.43.122)
+                      if (ip.match(/^[\x00-\xff]+$/) && ip.length <= 16 && !ip.match(/^\d+\.\d+\.\d+\.\d+$/)) {
+                          // Convert raw bytes to proper IP format
+                          var bytes = [];
+                          for (var i = 0; i < ip.length; i++) {
+                              bytes.push(ip.charCodeAt(i));
                           }
-                  
-                          ip = parts.join('.');
-                      } else if (parts.length == 16) {
-                          // IPv6
-                  
-                          // convert to colon-separated lower case 16-bit hexadecimal fields with leading zeroes stripped
-                          ip = parts
-                              .join('')
-                              .match(/.{1,4}/g)
-                              .map(function(word) {
-                                // RFC 5952: 4.1. Leading zeros MUST be suppressed. A single 16-bit 0000 field MUST be represented as 0.
-                                word = word.replace(/^0+/, '');
-                                if (word.length === 0) {
-                                  word = "0";
-                                }
-                                return word;
-                              })
-                              .join(':')
-                              // RFC 5952: 4.3. The characters "a", "b", "c", "d", "e", and "f" in an IPv6 address MUST be represented in lowercase.
-                              .toLowerCase();
-                  
-                          // add a temporary terminator to each end of the string to aid matching consecutive 16-bit 0 fields
-                          ip = '<' + ip + '>';
-                  
-                          // RFC 5952:
-                          //   4.2.1. The use of the symbol "::" MUST be used to its maximum capability.
-                          //   4.2.2. The symbol "::" MUST NOT be used to shorten just one 16-bit 0 field.
-                          //   4.2.3.  The longest, left-most run of consecutive 16-bit 0 fields MUST be shortened
-                          for (i = 8; i > 1; i--) {
-                              r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
-                              if (m = ip.match(r1)) {
-                                  ip = ip.replace(r1, '::');
-                                  break;
+                          
+                          if (bytes.length === 4) {
+                              // IPv4
+                              ip = bytes.join('.');
+                          } else if (bytes.length === 16) {
+                              // IPv6
+                              var parts = [];
+                              for (var i = 0; i < 16; i += 2) {
+                                  var hex = ((bytes[i] << 8) + bytes[i + 1]).toString(16);
+                                  parts.push(hex);
                               }
+                              ip = parts.join(':');
+                              
+                              // Apply IPv6 compression rules
+                              ip = '<' + ip + '>';
+                              for (var i = 8; i > 1; i--) {
+                                  var r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
+                                  var m = ip.match(r1);
+                                  if (m) {
+                                      ip = ip.replace(r1, '::');
+                                      break;
+                                  }
+                              }
+                              ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
                           }
+                      } else {
+                          // Handle space-separated hex format (original logic)
+                          var parts = ip.trim().split(' ');
                   
-                          // remove any remaining temporary terminators
-                          ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
+                          if (parts.length === 4) {
+                              for (var i = 0; i < parts.length; ++i) {
+                                  parts[i] = parseInt(parts[i], 16);
+                              }
+                              ip = parts.join('.');
+                          } else if (parts.length == 16) {
+                              // IPv6 from space-separated hex
+                              ip = parts
+                                  .join('')
+                                  .match(/.{1,4}/g)
+                                  .map(function(word) {
+                                    word = word.replace(/^0+/, '');
+                                    if (word.length === 0) {
+                                      word = "0";
+                                    }
+                                    return word;
+                                  })
+                                  .join(':')
+                                  .toLowerCase();
+                      
+                              ip = '<' + ip + '>';
+                              for (var i = 8; i > 1; i--) {
+                                  var r1 = new RegExp("[:<>](?:0[:<>]){" + i + "}");
+                                  if (m = ip.match(r1)) {
+                                      ip = ip.replace(r1, '::');
+                                      break;
+                                  }
+                              }
+                              ip = ip.replace(/^[<]?([^>]+)[>]?$/, function (match, p1) { return p1; });
+                          }
                       }
                   
                       array[index]["{#BGPPEERREMOTEADDRESS}"] = ip;
