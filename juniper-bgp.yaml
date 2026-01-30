@@ -27,6 +27,23 @@ zabbix_export:
           type: DEPENDENT
           key: bgp.peer.discovery
           delay: '0'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#BGPEERREMOTEAS}'
+                value: '{$BGPEERREMOTEAS_DISCOVER}'
+                formulaid: A
+              - macro: '{#BGPEERREMOTEAS}'
+                value: '{$BGPEERREMOTEAS_IGNORE}'
+                operator: NOT_MATCHES_REGEX
+                formulaid: B
+              - macro: '{#BGPPEERREMOTEADDRESS}'
+                value: '{$BGPPEERREMOTEADDRESS_DISCOVER}'
+                formulaid: C
+              - macro: '{#BGPPEERREMOTEADDRESS}'
+                value: '{$BGPPEERREMOTEADDRESS_IGNORE}'
+                operator: NOT_MATCHES_REGEX
+                formulaid: D
           item_prototypes:
             - uuid: e7f97daaec3d4befbea948016db6f974
               name: 'Peer last received error ({#BGPPEERREMOTEADDRESS})'
@@ -299,6 +316,19 @@ zabbix_export:
             - type: DISCARD_UNCHANGED_HEARTBEAT
               parameters:
                 - 1h
+      macros:
+        - macro: '{$BGPEERREMOTEAS_DISCOVER}'
+          value: ^(.+)$
+          description: 'Discover only BGP peers by AS numbers defined here (use ^(65000|65002)$ to only discover peers whose AS number are 65000 or 65002)'
+        - macro: '{$BGPEERREMOTEAS_IGNORE}'
+          value: ^()$
+          description: 'Ignore BGP peers by AS number defined here (use ^(65000|65002)$ to discover all other peers whose AS number are not 65000 or 65002)'
+        - macro: '{$BGPPEERREMOTEADDRESS_DISCOVER}'
+          value: ^(.+)$
+          description: 'Discover only BGP peers by peer IP address defined here (use ^(10\.0\.0\.1|172\.16\.1\.1)$ to only discover peers whose IP addresses are 10.0.0.1 or 172.16.1.1)'
+        - macro: '{$BGPPEERREMOTEADDRESS_IGNORE}'
+          value: ^()$
+          description: 'Ignore BGP peers by peer IP address defined here (use ^(10\.0\.0\.1|172\.16\.1\.1)$ to only discover peers whose IP addresses are 10.0.0.1 or 172.16.1.1)'
       valuemaps:
         - uuid: f4b169a948eb4f208e4a028fa6d1e66b
           name: BgpPeerAdminStatus
