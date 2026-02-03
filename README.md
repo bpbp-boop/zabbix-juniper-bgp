@@ -27,6 +27,14 @@ Import the .yaml file under Configuration > Templates > Import.
 - BGP peer administrative status
 - BGP peer state
 
+## Macros
+|Name|Description|Default|
+|----|-----------|-------|
+|{$BGPEERREMOTEAS_DISCOVER}|<p>Discover only BGP Peer AS numbers defined with this regex</p>|`^(.+)$`|
+|{$BGPEERREMOTEAS_IGNORE}|<p>Ignore BGP Peer AS numbers defined with this regex</p>|`^()$`|
+|{$BGPPEERREMOTEADDRESS_DISCOVER}|<p>Discover only BGP Peer IP addresses defined with this regex</p>|`^(.+)$`|
+|{$BGPPEERREMOTEADDRESS_IGNORE}|<p>Ignore BGP Peer IP addresses defined with this regex</p>|`^()$`|
+
 ## About
 I wanted to monitor BGP peers using Zabbix without using any external scripts
 
