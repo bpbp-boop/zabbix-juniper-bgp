@@ -207,6 +207,25 @@ zabbix_export:
               expression: 'last(/Juniper BGP by SNMP/bgp.peer.state[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}],#3)<>6 and last(/Juniper BGP by SNMP/bgp.peer.status[{#BGPEERREMOTEAS}, {#BGPPEERREMOTEADDRESS}])=2'
               name: '{HOST.HOST} BGP peer {#BGPPEERREMOTEADDRESS} (AS{#BGPEERREMOTEAS}) is DOWN'
               priority: HIGH
+          overrides:
+            - name: 'Suppress triggers by AS number'
+              step: '1'
+              filter:
+                conditions:
+                  - macro: '{#BGPEERREMOTEAS}'
+                    value: '{$BGPEERREMOTEAS_NOTRIGGER}'
+              operations:
+                - operationobject: TRIGGER_PROTOTYPE
+                  discover: NO_DISCOVER
+            - name: 'Suppress triggers by peer IP address'
+              step: '2'
+              filter:
+                conditions:
+                  - macro: '{#BGPPEERREMOTEADDRESS}'
+                    value: '{$BGPPEERREMOTEADDRESS_NOTRIGGER}'
+              operations:
+                - operationobject: TRIGGER_PROTOTYPE
+                  discover: NO_DISCOVER
           master_item:
             key: bgp.peers.walk
           preprocessing:
@@ -323,6 +342,12 @@ zabbix_export:
         - macro: '{$BGPEERREMOTEAS_IGNORE}'
           value: ^()$
           description: 'Ignore BGP peers by AS number defined here (use ^(65000|65002)$ to discover all other peers whose AS number are not 65000 or 65002)'
+        - macro: '{$BGPEERREMOTEAS_NOTRIGGER}'
+          value: ^()$
+          description: 'Discover BGP peers but suppress triggers for AS numbers defined here (use ^(65000|65002)$ to suppress triggers for peers in AS 65000 or 65002)'
+        - macro: '{$BGPPEERREMOTEADDRESS_NOTRIGGER}'
+          value: ^()$
+          description: 'Discover BGP peers but suppress triggers for peer IP addresses defined here (use ^(10\.0\.0\.1|172\.16\.1\.1)$ to suppress triggers for those peers)'
         - macro: '{$BGPPEERREMOTEADDRESS_DISCOVER}'
           value: ^(.+)$
           description: 'Discover only BGP peers by peer IP address defined here (use ^(10\.0\.0\.1|172\.16\.1\.1)$ to only discover peers whose IP addresses are 10.0.0.1 or 172.16.1.1)'
