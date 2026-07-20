@@ -32,8 +32,10 @@ Import the .yaml file under Configuration > Templates > Import.
 |----|-----------|-------|
 |{$BGPEERREMOTEAS_DISCOVER}|<p>Discover only BGP Peer AS numbers defined with this regex</p>|`^(.+)$`|
 |{$BGPEERREMOTEAS_IGNORE}|<p>Ignore BGP Peer AS numbers defined with this regex</p>|`^()$`|
+|{$BGPEERREMOTEAS_NOTRIGGER}|<p>Discover BGP peers but suppress triggers for AS numbers defined with this regex (for example, `^16509$`)</p>|`^()$`|
 |{$BGPPEERREMOTEADDRESS_DISCOVER}|<p>Discover only BGP Peer IP addresses defined with this regex</p>|`^(.+)$`|
 |{$BGPPEERREMOTEADDRESS_IGNORE}|<p>Ignore BGP Peer IP addresses defined with this regex</p>|`^()$`|
+|{$BGPPEERREMOTEADDRESS_NOTRIGGER}|<p>Discover BGP peers but suppress triggers for peer IP addresses defined with this regex (for example, `^(10\.0\.0\.1|172\.16\.1\.1)$`)</p>|`^()$`|
 
 ## About
 I wanted to monitor BGP peers using Zabbix without using any external scripts
